@@ -1,0 +1,48 @@
+html, body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-auto-columns: max-content;
+  grid-template-columns: repeat(20, 1fr);
+}
+
+.grid > div {
+  text-align: center;
+  line-height: 20px;
+  padding: 10px;
+  font-size: 30px;
+}
+
+.container {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.grid {
+  max-width: 500px;
+}
+
+.filter {
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.filter select {
+  font-size: 20px;
+}
+
+.filter p {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin: 0;
+}
