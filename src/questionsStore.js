@@ -93,8 +93,8 @@ export const filterAnswers = () => {
 
   state.questions = Object.keys(state.filteredQuestions);
   selectFirstQuestion();
-  selectFirstYear();
   state.years = getYears(state);
+  selectFirstYear();
 }
 
 export const fetchQuestions = (token) => {
