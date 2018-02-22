@@ -6,6 +6,7 @@ import {
   selectYear,
   getDailyAnswers,
   fetchQuestions,
+  toggleFilterEmptyDays,
 } from './questionsStore';
 import getUrlParms from './helpers/getUrlParams';
 import { withStore } from './withStore';
@@ -77,6 +78,8 @@ const Filters = () => (
     <QuestionSelect />
     <p>Year: </p>
     {questionsStore.selectedQuestion && <YearSelect />}
+    <p>Show empty days: </p>
+    <input type="checkbox" onClick={toggleFilterEmptyDays} />
   </div>
 )
 

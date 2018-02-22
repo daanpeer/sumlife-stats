@@ -9,6 +9,9 @@ export const state = observable({
   selectedQuestion: null,
   selectedYear: null,
   years: [],
+  filters: {
+    emptyDays: true,
+  }
 });
 
 export const getSelectedQuestion = ({
@@ -67,6 +70,11 @@ export const getDailyAnswers = (state) => {
 
   return Array.from({ length: 364 }).reduce((acc, _, index) => {
     const day = index + 1
+
+    if (!state.filters.emptyDays && !answersPerDay[day]) {
+      return acc;
+    }
+
     return {
       ...acc,
       [day]: answersPerDay[day] ? answersPerDay[day] : null,
@@ -78,6 +86,13 @@ export const selectQuestion = question =>state.selectedQuestion = question
 export const selectFirstQuestion = () => state.selectedQuestion = state.questions[0];
 export const selectFirstYear = () => state.selectedYear = getSelectedQuestion(state).years[0];
 export const selectYear = year => state.selectedYear = year;
+
+export const toggleFilterEmptyDays = () => {
+  state.filters = {
+    ...state.filters,
+    emptyDays: !state.filters.emptyDays || false,
+  }
+}
 
 export const filterAnswers = () => {
   state.questions.forEach(({ question, answers }) => {
