@@ -79,7 +79,7 @@ const Filters = () => (
     <p>Year: </p>
     {questionsStore.selectedQuestion && <YearSelect />}
     <p>Show empty days: </p>
-    <input type="checkbox" onClick={toggleFilterEmptyDays} />
+    <input type="checkbox" defaultChecked={questionsStore.filters.emptyDays} onClick={toggleFilterEmptyDays} />
   </div>
 )
 
