@@ -49,3 +49,17 @@ html, body {
   padding-left: 10px;
   margin: 0;
 }
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.stats .key {
+}
+
+.stats .value {
+  margin-top: 10px;
+  font-size: 30px;
+}

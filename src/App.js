@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   state as questionsStore,
   selectQuestion,
@@ -6,19 +6,20 @@ import {
   selectYear,
   getDailyAnswers,
   fetchQuestions,
-  toggleFilterEmptyDays,
+  toggleFilterEmptyDays, getAverageAnswers, getTotalAnswers, progress,
 } from './questionsStore';
 import getUrlParms from './helpers/getUrlParams';
-import { withStore } from './withStore';
+import {withStore} from './withStore';
 import './App.css';
 
-const answerColors = [
-  '#0be881',
-  '#05c46b',
-  '#ffd32a',
-  '#ffa801',
-  '#ff3f34',
-]
+const answerColors = {
+  '-1': '#4bcffa',
+  '1': '#ff3f34',
+  '2': '#ffa801',
+  '3': '#ffd32a',
+  '4': '#05c46b',
+  '5': '#0be881',
+};
 
 const emoji = {
   '-1': ' 🤷‍♀️',
@@ -28,32 +29,30 @@ const emoji = {
   '3': '😐',
   '4': '🙂',
   '5': '😄'
-}
+};
 
 const AnswersPerDay = () => {
   const answers = getDailyAnswers(questionsStore);
-
   return (
     <div className="grid">
       {Object.keys(answers).map((day, index) => {
-        const answer = answers[day];
+        const answer = answers[day] || -1;
         return (
-          <div style={{ backgroundColor: answerColors[answer] || '#4bcffa' }} key={index}>
+          <div style={{backgroundColor: answerColors[answer]}} key={index}>
             {emoji[answer || -1]}
           </div>
         );
       })}
     </div>
   )
-}
+};
 
 const YearSelect = () => {
   const {
     years,
   } = getSelectedQuestion(questionsStore);
-
   return (
-    <select onChange={(e) => selectYear(e.target.value)}>
+    <select value={questionsStore.selectedYear} onChange={(e) => selectYear(e.target.value)}>
       {years.map((year, index) =>
         <option
           key={index}
@@ -64,7 +63,7 @@ const YearSelect = () => {
       )}
     </select>
   )
-}
+};
 
 const QuestionSelect = () => (
   <select onChange={(e) => selectQuestion(e.target.value)}>
@@ -75,43 +74,61 @@ const QuestionSelect = () => (
 const Filters = () => (
   <div className="filter">
     <p>Question: </p>
-    <QuestionSelect />
+    <QuestionSelect/>
     <p>Year: </p>
-    {questionsStore.selectedQuestion && <YearSelect />}
+    {questionsStore.selectedQuestion && <YearSelect/>}
     <p>Show empty days: </p>
-    <input type="checkbox" defaultChecked={questionsStore.filters.emptyDays} onClick={toggleFilterEmptyDays} />
+    <input type="checkbox" defaultChecked={questionsStore.filters.emptyDays} onClick={toggleFilterEmptyDays}/>
   </div>
-)
+);
+
+const Stats = () => (
+  <div className="stats">
+    <div className="stat">
+      <div className="key">Average</div>
+      <div className="value">{getAverageAnswers(questionsStore)}</div>
+    </div>
+    <div className="stat">
+      <div className="key">Answers</div>
+      <div className="value">{getTotalAnswers(questionsStore)}</div>
+    </div>
+    <div className="stat">
+      <div className="key">Progress ({questionsStore.selectedYear})</div>
+      <div className="value">{progress()}%</div>
+    </div>
+  </div>
+);
 
 class App extends Component {
   componentDidMount() {
-    const { token } = getUrlParms(window.location.search);
+    const {token} = getUrlParms(window.location.search);
     if (token) {
       fetchQuestions(token);
     }
   }
-
+  
   render() {
     const {
       loading,
       selectedYear,
       error,
     } = questionsStore;
-
+    
     if (error) {
       return 'error..';
     }
-
+    
     if (loading) {
       return 'loading..';
     }
-
+    
     return (
       <div className="container">
         <h1>Welcome</h1>
-        <Filters />
+        <Filters/>
+        <Stats/>
         {selectedYear && (
-          <AnswersPerDay />
+          <AnswersPerDay/>
         )}
       </div>
     );
