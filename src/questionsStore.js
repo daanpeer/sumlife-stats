@@ -61,27 +61,38 @@ export const getYears = (state) => {
 
 export const getAnswersPerDay = (state) => {
   const answersPerYear = getAnswersOfYear(state);
-  return answersPerYear.reduce((acc, { answer, date }) => {
+  return answersPerYear.reduce((acc, { answer , date }) => {
     return {
       ...acc,
-      [getDayOfYear(new Date(date))]: answer,
+      [getDayOfYear(new Date(date))]: {
+        answer,
+        date,
+      },
     }
   }, {});
 };
 
 export const getDailyAnswers = (state) => {
   const answersPerDay = getAnswersPerDay(state);
-
-  return Array.from({ length: 364 }).reduce((acc, _, index) => {
+  return Array.from({ length: 365 }).reduce((acc, _, index) => {
     const day = index + 1;
-
     if (!state.filters.emptyDays && !answersPerDay[day]) {
       return acc;
     }
 
+    let answer;
+    if (!answersPerDay[day]) {
+      answer = {
+        date: new Date(state.selectedYear, 0, day).toString(),
+        answer: null,
+      }
+    } else {
+      answer = answersPerDay[day];
+    }
+    
     return {
       ...acc,
-      [day]: answersPerDay[day] ? answersPerDay[day] : null,
+      [day]: answer,
     }
   }, {})
 };
