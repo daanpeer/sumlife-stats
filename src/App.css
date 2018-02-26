@@ -91,6 +91,7 @@ html, body {
 }
 
 .stats {
+  text-align: center;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   state as questionsStore,
   selectQuestion,
@@ -6,14 +6,18 @@ import {
   selectYear,
   getDailyAnswers,
   fetchQuestions,
-  toggleFilterEmptyDays, getAverageAnswers, getTotalAnswers, progress,
+  toggleFilterEmptyDays,
+  getAverageAnswers,
+  getTotalAnswers,
+  progress,
 } from './questionsStore';
 import getUrlParams from './helpers/getUrlParams';
-import {withStore} from './withStore';
+import { withStore } from './withStore';
 import './App.css';
 
 const answerColors = {
   '-1': '#4bcffa',
+  '0': '#ff3f34', // @todo change this color
   '1': '#ff3f34',
   '2': '#ffa801',
   '3': '#ffd32a',
@@ -28,19 +32,19 @@ const emoji = {
   '2': '😕',
   '3': '😐',
   '4': '🙂',
-  '5': '😄'
+  '5': '😄',
 };
 
 const getMonth = date => Intl.DateTimeFormat('en-US', {
-    day: 'numeric',
-    month: 'short',
-  }).format((new Date(date)));
+  day: 'numeric',
+  month: 'short',
+}).format((new Date(date)));
 
 const Answer = ({ isOpen, answer: { answer, date }, onOpenAnswer, onCloseAnswer }) => {
   return (
     <div
-      onClick={() => isOpen ? onOpenAnswer : onCloseAnswer}
-      style={{backgroundColor: answerColors[answer || -1]}}
+      onClick={() => !isOpen ? onOpenAnswer() : onCloseAnswer()}
+      style={{ backgroundColor: answerColors[answer || -1] }}
       className={`${isOpen ? 'open' : ''} answer`}
     >
       <div className={`emoji ${isOpen ? 'emoji-open' : ''}`}>{emoji[answer || -1]}</div>
@@ -52,7 +56,7 @@ const Answer = ({ isOpen, answer: { answer, date }, onOpenAnswer, onCloseAnswer 
 };
 
 class AnswersPerDay extends Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {};
   }
@@ -65,6 +69,11 @@ class AnswersPerDay extends Component {
           return (
             <Answer
               isOpen={this.state.open === day}
+              onCloseAnswer={() => {
+                this.setState(() => ({
+                  open: null,
+                }))
+              }}
               onOpenAnswer={() => {
                 this.setState(() => ({
                   open: day,
@@ -92,7 +101,7 @@ const YearSelect = () => {
           value={year}
         >
           {year}
-        </option>
+        </option>,
       )}
     </select>
   )
@@ -108,11 +117,11 @@ const QuestionSelect = () => (
 const Filters = () => (
   <div className="filter">
     <p>Question: </p>
-    <QuestionSelect/>
+    <QuestionSelect />
     <p>Year: </p>
-    {questionsStore.selectedQuestion && <YearSelect/>}
+    {questionsStore.selectedQuestion && <YearSelect />}
     <p>Show empty days: </p>
-    <input type="checkbox" defaultChecked={questionsStore.filters.emptyDays} onClick={toggleFilterEmptyDays}/>
+    <input type="checkbox" defaultChecked={questionsStore.filters.emptyDays} onClick={toggleFilterEmptyDays} />
   </div>
 );
 
@@ -135,7 +144,7 @@ const Stats = () => (
 
 class App extends Component {
   componentDidMount() {
-    const {token} = getUrlParams(window.location.search);
+    const { token } = getUrlParams(window.location.search);
     if (token) {
       fetchQuestions(token);
     }
@@ -157,13 +166,15 @@ class App extends Component {
     }
     
     return (
-      <div className="container">
-        <Stats/>
-        <Filters/>
-        {selectedYear && (
-          <AnswersPerDay/>
-        )}
-      </div>
+      <Fragment>
+        <Stats />
+        <div className="container">
+          <Filters />
+          {selectedYear && (
+            <AnswersPerDay />
+          )}
+        </div>
+      </Fragment>
     );
   }
 }
