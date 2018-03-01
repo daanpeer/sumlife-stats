@@ -120,13 +120,24 @@ const QuestionSelect = () => (
   </select>
 );
 
+const Selections = () => (
+  <div className="selections">
+    <div className="selection">
+      {questionsStore.selectedQuestion}
+    </div>
+    <div className="selection">
+      {questionsStore.selectedYear}
+    </div>
+  </div>
+);
+
 const Filters = () => (
-  <div className="filter">
-    <p>Question: </p>
+  <div className="filters">
+    <p>Show the question</p>
     <QuestionSelect />
-    <p>Year: </p>
+    <p>from the year </p>
     {questionsStore.selectedQuestion && <YearSelect />}
-    <p>Show empty days: </p>
+    <p>Show empty days? </p>
     <input type="checkbox" defaultChecked={questionsStore.filters.emptyDays} onClick={toggleFilterEmptyDays} />
   </div>
 );

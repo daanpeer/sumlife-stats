@@ -2,10 +2,6 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.container {
-  text-align: center;
-}
-
 .grid {
   min-height: 400px;
   min-width: 400px;
@@ -26,12 +22,12 @@ html, body {
 }
 
 .grid .emoji-detail {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  top: 20px;
+  top: 220px;
   bottom: 40px;
   height: 0;
   width: 20px;
@@ -69,13 +65,15 @@ html, body {
 }
 
 .container {
+  text-align: center;
+  margin-top: 140px;
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.filter {
-  margin-top: 130px;
+.filters {
+  font-weight: 100;
   display: flex;
   font-size: 20px;
   justify-content: center;
@@ -85,24 +83,32 @@ html, body {
 }
 
 @media (min-width: 576px) {
-  .filter {
+  .filters {
     flex-direction: row;
   }
 }
 
-.filter select {
+.filters select {
+  font-weight: 200;
+  padding-bottom: 6px;
   font-size: 20px;
   border: none;
   border-bottom: 1px solid black;
 }
 
-.filter p {
+.filters input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+}
+
+.filters p {
   padding-right: 10px;
   padding-left: 10px;
   margin: 0;
 }
 
 .stats {
+  z-index: 1;
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -120,10 +126,23 @@ html, body {
   flex-basis: 100%
 }
 
-.stats .key {
-}
-
 .stats .value {
   margin-top: 10px;
   font-size: 40px;
+}
+
+.selections {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  line-height: 30px;
+}
+
+.selections .selection {
+  background-color: #575fcf;
+  padding: 10px 20px 10px 20px;
+  color: white;
+  margin-right:10px;
+  border-radius: 20px;
 }
