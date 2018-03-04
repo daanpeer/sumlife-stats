@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Answer from "../answer";
-import state, { getDailyAnswers } from "../../questionsStore";
+import state, { getDailyAnswers } from "../../store";
 
 export default class AnswersPerDay extends Component {
   constructor(props) {

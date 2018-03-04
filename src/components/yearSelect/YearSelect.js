@@ -1,6 +1,6 @@
 import React from "react";
-import { selectYear } from "../../questionsStore";
-import state, { getSelectedQuestion } from "../../questionsStore";
+import { selectYear } from "../../store";
+import state, { getSelectedQuestion } from "../../store";
 
 export default () => {
   const { years } = getSelectedQuestion(state);

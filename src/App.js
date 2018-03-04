@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from "react";
-import state, { fetchQuestions } from "./questionsStore";
+import state, { fetchQuestions } from "./store";
 import getUrlParams from "./helpers/getUrlParams";
-import { withStore } from "./withStore";
 import "./App.css";
-import { Stats, Filters, AnswersPerDay } from "./components";
+import { withStore, Stats, Filters, AnswersPerDay } from "./components";
 
 class App extends Component {
   componentDidMount() {

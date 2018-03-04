@@ -1,7 +1,7 @@
 import React from "react";
 import QuestionSelect from "../questionSelect";
 import YearSelect from "../yearSelect";
-import state, { toggleFilterEmptyDays } from "../../questionsStore";
+import state, { toggleFilterEmptyDays } from "../../store";
 
 export default () => (
   <div className="filters">

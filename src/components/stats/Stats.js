@@ -4,7 +4,7 @@ import state, {
   getAverageAnswers,
   getTotalAnswers,
   progress
-} from "../../questionsStore";
+} from "../../store";
 
 export default () => (
   <div className="stats">
