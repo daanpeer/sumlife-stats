@@ -4,10 +4,8 @@ env:
     secure: "WZ9ucl7SNpt/qG26/QeBXh9/Y2aJW2hvL5jp6UbLSqMhyZH2/EhGwT5kPgQh9DE2kiae76BsBqgWquBA8NrPXWHExvpwlVTI5BhEjlaUi95+KVjDfDUBx0YX1Gj9yLiy89d2m7+SyO8bfYwwsn9B+nEQBUpstLu9s3AKng5PLMcnh0LuNm1JtOV3uTLTpvTgFexqaCpZEg9fZPI1FfnTDs7gkQC2q8bVDwXhTuAI3440JAswaEqOTwmMqXFO0zWbrVLYWXzARnN4LLJ/gTZ8i2CcYHRiCsU0Mb2xOeMr2cgevo59zL4FtgnsT5cwn4aJBalZYhsl09I7BfrzOmI/fQk71aJrKNFCwPuegxYeI7EU1QHR+IT03aQPlVVxlK5VreL/NZmsIbnk+Zti9HNsXokqxKbud1W1qSaA3WL6J/5+atKZVUVGWn0LpVusV3sHhM9+ph2MeMnhbrQcxzpzUGFdoqqXjl5XyvYIJMsrXiQDmzgGyOz9oQsa9sOGsVwHk0lFolcmwsBNNYT1Nm23gMRqWevtz0rtPi+0APhBk9kJ+XwKD72jz+8nD9rFKYVwYWOE24yhpPvgxcHcMOutRFh5yvgEapB8z9iCKgumt3v8mbg94gLrcI2tuCLpFD8f661fINPyx3BqrN4YU8g9vzR5AP6Zbokl49UuuseGSx0="
 node_js:
   - 9
-before_script:
-  - npm install
 script:
-  - npm run deploy
+  - yarn test
 cache:
   directories:
     - "node_modules"
@@ -36,3 +34,4 @@ after_success:
               "Host github.com" \
               "  IdentityFile $SSH_FILE" \
               "  LogLevel ERROR" >> ~/.ssh/config
+  - npm run deploy
