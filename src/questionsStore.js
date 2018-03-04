@@ -1,7 +1,7 @@
-import { observable } from './observe';
-import { getDayOfYear } from './helpers/getDayOfYear';
+import { observable } from "./observe";
+import { getDayOfYear } from "./helpers/getDayOfYear";
 
-export const state = observable({
+const state = observable({
   loading: true,
   error: false,
   filteredQuestions: {},
@@ -10,44 +10,33 @@ export const state = observable({
   selectedYear: null,
   years: [],
   filters: {
-    emptyDays: true,
+    emptyDays: true
   }
 });
 
-export const getSelectedQuestion = ({
-  filteredQuestions,
-  selectedQuestion,
-}) => filteredQuestions[selectedQuestion];
+export const getSelectedQuestion = ({ filteredQuestions, selectedQuestion }) =>
+  filteredQuestions[selectedQuestion];
 
-export const getAnswersPerYear = (answers) => answers.reduce((acc, answer) => {
-  const year = new Date(answer.date).getFullYear();
-  return {
-    ...acc,
-    [year]: [
-      ...acc[year] || [],
-      answer,
-    ]
-  };
-}, {});
+export const getAnswersPerYear = answers =>
+  answers.reduce((acc, answer) => {
+    const year = new Date(answer.date).getFullYear();
+    return {
+      ...acc,
+      [year]: [...(acc[year] || []), answer]
+    };
+  }, {});
 
-export const getAnswersOfYear = (state) => {
-  const {
-    filteredQuestions,
-    selectedQuestion,
-    selectedYear,
-  } = state;
+export const getAnswersOfYear = state => {
+  const { filteredQuestions, selectedQuestion, selectedYear } = state;
 
   return filteredQuestions[selectedQuestion].answers.filter(({ date }) => {
     return new Date(date).getFullYear() === parseInt(selectedYear, 10);
-  })
+  });
 };
 
-export const getYears = (state) => {
+export const getYears = state => {
   const years = [];
-  const {
-    filteredQuestions,
-    selectedQuestion,
-  } = state;
+  const { filteredQuestions, selectedQuestion } = state;
 
   filteredQuestions[selectedQuestion].answers.forEach(({ date }) => {
     const year = new Date(date).getFullYear();
@@ -59,20 +48,20 @@ export const getYears = (state) => {
   return years;
 };
 
-export const getAnswersPerDay = (state) => {
+export const getAnswersPerDay = state => {
   const answersPerYear = getAnswersOfYear(state);
-  return answersPerYear.reduce((acc, { answer , date }) => {
+  return answersPerYear.reduce((acc, { answer, date }) => {
     return {
       ...acc,
       [getDayOfYear(new Date(date))]: {
         answer,
-        date,
-      },
-    }
+        date
+      }
+    };
   }, {});
 };
 
-export const getDailyAnswers = (state) => {
+export const getDailyAnswers = state => {
   const answersPerDay = getAnswersPerDay(state);
   return Array.from({ length: 365 }).reduce((acc, _, index) => {
     const day = index + 1;
@@ -84,23 +73,26 @@ export const getDailyAnswers = (state) => {
     if (!answersPerDay[day]) {
       answer = {
         date: new Date(state.selectedYear, 0, day).toString(),
-        answer: null,
-      }
+        answer: null
+      };
     } else {
       answer = answersPerDay[day];
     }
-    
+
     return {
       ...acc,
-      [day]: answer,
-    }
-  }, {})
+      [day]: answer
+    };
+  }, {});
 };
 
-export const getAverageAnswers = (state) => {
+export const getAverageAnswers = state => {
   const answers = getAnswersOfYear(state);
-  return Math.round(answers.map(({ answer }) => parseInt(answer, 10))
-    .reduce((prev, next) => prev + next) / answers.length);
+  return Math.round(
+    answers
+      .map(({ answer }) => parseInt(answer, 10))
+      .reduce((prev, next) => prev + next) / answers.length
+  );
 };
 
 export const progress = () => {
@@ -112,21 +104,22 @@ export const progress = () => {
   return Math.round(currentDate / 365 * 100);
 };
 
-export const getTotalAnswers = (state) => getAnswersOfYear(state).length;
+export const getTotalAnswers = state => getAnswersOfYear(state).length;
 
-export const selectQuestion = question =>state.selectedQuestion = question
-export const selectFirstQuestion = () => state.selectedQuestion = state.questions[0];
+export const selectQuestion = question => (state.selectedQuestion = question);
+export const selectFirstQuestion = () =>
+  (state.selectedQuestion = state.questions[0]);
 export const selectLastYear = () => {
   const years = getSelectedQuestion(state).years;
   state.selectedYear = years[years.length - 1];
 };
-export const selectYear = year => state.selectedYear = year;
+export const selectYear = year => (state.selectedYear = year);
 
 export const toggleFilterEmptyDays = () => {
   state.filters = {
     ...state.filters,
-    emptyDays: !state.filters.emptyDays || false,
-  }
+    emptyDays: !state.filters.emptyDays || false
+  };
 };
 
 export const filterAnswers = () => {
@@ -136,9 +129,9 @@ export const filterAnswers = () => {
       ...state.filteredQuestions,
       [question]: {
         years: Object.keys(answersPerYear),
-        answers,
+        answers
       }
-    }
+    };
   });
 
   state.questions = Object.keys(state.filteredQuestions);
@@ -147,7 +140,7 @@ export const filterAnswers = () => {
   selectLastYear();
 };
 
-export const fetchQuestions = (token) => {
+export const fetchQuestions = token => {
   state.loading = true;
   return fetch(`${process.env.REACT_APP_API_URL}${token}`)
     .then(response => response.json())
@@ -159,5 +152,7 @@ export const fetchQuestions = (token) => {
       state.questions = questions;
       filterAnswers();
       state.loading = false;
-    })
+    });
 };
+
+export default state;
