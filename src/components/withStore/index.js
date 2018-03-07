@@ -1,2 +1,2 @@
-import withStore from "./withStore";
+import withStore from './withStore';
 export default withStore;

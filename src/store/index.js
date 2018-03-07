@@ -14,8 +14,8 @@ import state, {
   toggleFilterEmptyDays,
   filterAnswers,
   fetchQuestions,
-  getAverageAnswers
-} from "./questionsStore";
+  getAverageAnswers,
+} from './questionsStore';
 
 export {
   getSelectedQuestion,
@@ -33,7 +33,7 @@ export {
   selectYear,
   toggleFilterEmptyDays,
   filterAnswers,
-  fetchQuestions
+  fetchQuestions,
 };
 
 export default state;

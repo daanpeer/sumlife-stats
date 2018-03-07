@@ -1,2 +1,2 @@
-import QuestionSelect from "./QuestionSelect";
+import QuestionSelect from './QuestionSelect';
 export default QuestionSelect;

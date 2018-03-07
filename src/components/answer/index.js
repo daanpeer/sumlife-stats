@@ -1,2 +1,2 @@
-import Answer from "./Answer";
+import Answer from './Answer';
 export default Answer;

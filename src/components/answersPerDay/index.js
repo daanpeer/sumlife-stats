@@ -1,3 +1,3 @@
-import AnswersPerDay from "./AnswersPerDay";
+import AnswersPerDay from './AnswersPerDay';
 
 export default AnswersPerDay;

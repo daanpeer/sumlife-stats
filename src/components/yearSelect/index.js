@@ -1,2 +1,2 @@
-import YearSelect from "./YearSelect";
+import YearSelect from './YearSelect';
 export default YearSelect;

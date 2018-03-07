@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { observe } from "../../helpers";
+import React, { Component } from 'react';
+import { observe } from '../../helpers';
 
 export default (WrappedComponent, store) => {
   return class extends Component {

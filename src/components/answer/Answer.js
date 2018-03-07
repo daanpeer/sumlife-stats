@@ -1,12 +1,7 @@
-import React from "react";
-import { answerColors, emoji, getMonth } from "../../helpers";
+import React from 'react';
+import { answerColors, emoji, getMonth } from '../../helpers';
 
-export default ({
-  isOpen,
-  answer: { answer, date },
-  onOpenAnswer,
-  onCloseAnswer
-}) => {
+export default ({ isOpen, answer: { answer, date }, onOpenAnswer, onCloseAnswer }) => {
   return (
     <div
       onClick={() => (!isOpen ? onOpenAnswer() : onCloseAnswer())}
@@ -16,7 +11,7 @@ export default ({
       <div className={`emoji`}>{emoji[answer || -1]}</div>
       <div
         style={{ backgroundColor: answerColors[answer || -1] }}
-        className={`emoji-detail ${isOpen ? "emoji-detail-open" : ""}`}
+        className={`emoji-detail ${isOpen ? 'emoji-detail-open' : ''}`}
       >
         <div className="emoji">{emoji[answer || -1]}</div>
         <div className="date">{getMonth(date)}</div>

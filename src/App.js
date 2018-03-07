@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
-import state, { fetchQuestions } from "./store";
-import getUrlParams from "./helpers/getUrlParams";
-import "./App.css";
-import { withStore, Stats, Filters, AnswersPerDay } from "./components";
+import React, { Component, Fragment } from 'react';
+import state, { fetchQuestions } from './store';
+import getUrlParams from './helpers/getUrlParams';
+import './App.css';
+import { withStore, Stats, Filters, AnswersPerDay } from './components';
 
 class App extends Component {
   componentDidMount() {
@@ -16,11 +16,11 @@ class App extends Component {
     const { loading, selectedYear, error } = state;
 
     if (error) {
-      return "error..";
+      return 'error..';
     }
 
     if (loading) {
-      return "loading..";
+      return 'loading..';
     }
 
     return (

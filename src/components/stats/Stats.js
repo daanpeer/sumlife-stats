@@ -1,10 +1,6 @@
-import React from "react";
-import { emoji } from "../../helpers";
-import state, {
-  getAverageAnswers,
-  getTotalAnswers,
-  progress
-} from "../../store";
+import React from 'react';
+import { emoji } from '../../helpers';
+import state, { getAverageAnswers, getTotalAnswers, progress } from '../../store';
 
 export default () => (
   <div className="stats">

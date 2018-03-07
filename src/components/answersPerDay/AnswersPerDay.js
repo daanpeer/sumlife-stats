@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import Answer from "../answer";
-import state, { getDailyAnswers } from "../../store";
+import React, { Component } from 'react';
+import Answer from '../answer';
+import state, { getDailyAnswers } from '../../store';
 
 export default class AnswersPerDay extends Component {
   constructor(props) {
@@ -18,12 +18,12 @@ export default class AnswersPerDay extends Component {
               isOpen={this.state.open === day}
               onCloseAnswer={() => {
                 this.setState(() => ({
-                  open: null
+                  open: null,
                 }));
               }}
               onOpenAnswer={() => {
                 this.setState(() => ({
-                  open: day
+                  open: day,
                 }));
               }}
               key={index}

@@ -1,5 +1,5 @@
-import React from "react";
-import state, { selectQuestion } from "../../store";
+import React from 'react';
+import state, { selectQuestion } from '../../store';
 
 export default () => (
   <select onChange={e => selectQuestion(e.target.value)}>
